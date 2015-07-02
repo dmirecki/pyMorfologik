@@ -9,5 +9,6 @@ setup(
     author='Damian Mirecki',
     author_email='dmirecki.dm@gmail.com',
     description='Binding for Morfologik tool',
-    url='https://github.com/dmirecki/pyMorfologik'
+    url='https://github.com/dmirecki/pyMorfologik',
+    keywords=['morfologik']
 )
