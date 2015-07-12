@@ -1,1 +1,1 @@
-include *.jar
+include pymorfologik/jar/*.jar
