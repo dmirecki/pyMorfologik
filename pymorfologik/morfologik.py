@@ -3,7 +3,7 @@
 import os
 import subprocess
 
-from pymorfologik.output_parser import parse_for_simple_stemms
+from pyMorfologik.output_parser import parse_for_simple_stemms
 
 
 class Morfologik(object):
