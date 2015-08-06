@@ -3,7 +3,7 @@
 import os
 import subprocess
 
-from pyMorfologik.output_parser import parse_for_simple_stemms
+from pyMorfologik.output_parser import parse_for_simple_stems
 
 
 class Morfologik(object):
@@ -34,7 +34,7 @@ class Morfologik(object):
         """
         words = self._make_unique(words)
         output = self._run_morfologik(words)
-        return parse_for_simple_stemms(output)
+        return parse_for_simple_stems(output)
     get_simple_stem.__annotations__ = {'words': list, 'return': dict}
 
     def _run_morfologik(self, words):
