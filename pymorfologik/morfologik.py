@@ -7,40 +7,51 @@ from pyMorfologik.output_parser import parse_for_simple_stemms
 
 
 class Morfologik(object):
-    def __init__(self, jar_path: str=''):
+    def __init__(self, jar_path=''):
         self.jar_path = jar_path
 
         if self.jar_path == '':
             this_dir, _ = os.path.split(__file__)
             self.jar_path = os.path.join(this_dir, "jar/morfologik1.9.jar")
+    __init__.__annotations__ = {'jar_path': str}
 
-    def get_simple_stem(self, words: list) -> dict:
+    def get_simple_stem(self, words):
         """
-        Find only stemms for given words.
+        Find stems for a given text.
 
-        For example:
-        When given words ['gra', 'tańczyłem'] it returns
+        Example:
+        Morfologik().get_simple_stem(['ja tańczę a ona śpi'])
+        returns
         {
-            'gra': ['gra', 'grać'],
-            'tańczyłem': ['tańczyć']
+             'ja': ['ja'],
+             'tańczę': ['tańczyć'],
+             'a': ['a'],
+             'ona': ['on'],
+             'śpi': ['spać']
         }
+
+        Notes: captions and interpunction may not always work.
         """
         words = self._make_unique(words)
         output = self._run_morfologik(words)
         return parse_for_simple_stemms(output)
+    get_simple_stem.__annotations__ = {'words': list, 'return': dict}
 
-    def _run_morfologik(self, words: list) -> str:
+    def _run_morfologik(self, words):
         """
-        Run morfologik and assumes that input and output is UTF-8 encoded.
+        Runs morfologik java jar and assumes that input and output is
+        UTF-8 encoded.
         """
-        p = subprocess.Popen(['java', '-jar', self.jar_path, 'plstem', '-ie', 'UTF-8', '-oe', 'UTF-8'],
-                             stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT)
-
+        p = subprocess.Popen(
+            ['java', '-jar', self.jar_path, 'plstem',
+             '-ie', 'UTF-8',
+             '-oe', 'UTF-8'],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT)
         out, _ = p.communicate(input=bytes("\n".join(words), "UTF-8"))
-
         return out.decode()
+    _run_morfologik.__annotations__ = {'words': list, 'return': str}
 
     def _make_unique(self, words):
         keys = {}
