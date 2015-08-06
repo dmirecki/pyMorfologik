@@ -1,6 +1,5 @@
 # coding=utf-8
-
-from collections import defaultdict
+from collections import OrderedDict
 
 
 def _stem_found(stem):
@@ -20,16 +19,20 @@ _get_lines_with_stems.__annotations__ = {'morfologik_output': str,
 
 def parse_for_simple_stems(output):
     lines_with_stems = _get_lines_with_stems(output)
+    stems = list()
 
-    stems = defaultdict(lambda: [])
-
+    last_word = None
     for line in lines_with_stems:
-        original_word, stem, _ = line.split("\t")
+        word, stem, _ = line.split("\t")
 
         if not _stem_found(stem):
             continue
 
-        stems[original_word].append(stem)
+        if last_word != word:
+            stems.append((word, []))
 
-    return dict(stems)
+        stems[-1][1].append(stem)
+        last_word = word
+
+    return stems
 parse_for_simple_stems.__annotations__ = {'output': str, 'return': dict}
