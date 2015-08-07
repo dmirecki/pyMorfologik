@@ -4,7 +4,7 @@ Morfologik is Polish morphological analyzer. For more information see http://git
 
 ## Requirements
 
-This binding works only with Python 3.
+This binding works with Python 2 and Python 3.
 
 ## Installation
 
@@ -17,6 +17,12 @@ Install it from pip:
 Now, only simple stems are supported:
 
     >>> from pymorfologik import Morfologik
-    >>> Morfologik().get_simple_stem(['taÒczy≥em', 'gra'])
-    {'gra': ['gra', 'graÊ'], 'taÒczy≥em': ['taÒczyÊ']}
+    >>> Morfologik().get_simple_stem(['Ala ma kota'])
+    [('Ala', ['Ala', 'Al', 'Alo']),
+     ('kota', ['kota', 'kot', 'kot', 'kot']),
+     ('ma', ['mieƒá', 'm√≥j'])]
 
+### Acknowledgements
+
+This repo is based on Morfologik, a great contribution of Marcin Mi≈Çowski (http://marcinmilkowski.pl) and Dawid Weiss (http://www.dawidweiss.com)
+This repo is a fork and follow up of https://github.com/dmirecki/pyMorfologik.git
