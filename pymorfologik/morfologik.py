@@ -25,9 +25,12 @@ class Morfologik(object):
             self.jar_path = os.path.join(this_dir, "jar/morfologik1.9.jar")
     __init__.__annotations__ = {'jar_path': str}
 
-    def get_simple_stem(self, words):
+    def get_simple_stem(self, words, skip_empty=False):
         """
         Find stems for a given text.
+
+        :param skip_empty: set True if you want to get rid of words with no
+                           stems. Otherwise set to False (default)
 
         Example:
         Morfologik().get_simple_stem(['ja tańczę a ona śpi'])
@@ -44,8 +47,9 @@ class Morfologik(object):
         """
         words = self._make_unique(words)
         output = self._run_morfologik(words)
-        return parse_for_simple_stems(output)
-    get_simple_stem.__annotations__ = {'words': list, 'return': dict}
+        return parse_for_simple_stems(output, skip_empty=skip_empty)
+    get_simple_stem.__annotations__ = {'words': list, 'skip_empty': bool,
+                                       'return': dict}
 
     def _run_morfologik(self, words):
         """

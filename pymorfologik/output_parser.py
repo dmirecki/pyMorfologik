@@ -31,8 +31,9 @@ def parse_for_simple_stems(input, skip_empty=False):
     last_word = None
     for line in lines_with_stems:
         word, stem, _ = line.split("\t")
+        stem = stem if stem != '-' else None
 
-        if skip_empty and not _stem_found(stem):
+        if skip_empty and (stem is None):
             continue
 
         if last_word != word:
