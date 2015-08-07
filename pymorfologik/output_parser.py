@@ -38,7 +38,10 @@ def parse_for_simple_stems(input, skip_empty=False):
         if last_word != word:
             stems.append((word, []))
 
-        stems[-1][1].append(stem)
+        ## append new stem only if not on list already
+        if stem not in stems[-1][1]:
+            stems[-1][1].append(stem)
+
         last_word = word
 
     return stems
