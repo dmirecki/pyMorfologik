@@ -8,9 +8,9 @@ This binding works with Python 2 and Python 3.
 
 ## Installation
 
-Install it from pip:
+For now, just colone the repo
 
-`> pip install pyMorfologik`
+ > git clone https://github.com/adibo/pyMorfologik.git
 
 ## Usage
 
@@ -24,5 +24,5 @@ Now, only simple stems are supported:
 
 ### Acknowledgements
 
-This repo is based on Morfologik, a great contribution of Marcin Miłowski (http://marcinmilkowski.pl) and Dawid Weiss (http://www.dawidweiss.com)
+This repo is based on Morfologik, a great contribution of Marcin Miłowski (http://marcinmilkowski.pl) and Dawid Weiss (http://www.dawidweiss.com).
 This repo is a fork and follow up of https://github.com/dmirecki/pyMorfologik.git
