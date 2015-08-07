@@ -16,7 +16,7 @@ _get_lines_with_stems.__annotations__ = {'morfologik_output': str,
                                          'return': list}
 
 
-def parse_for_simple_stems(input, skip_empty=False):
+def parse_for_simple_stems(input, skip_empty=False, skip_same_stems=True):
     """
     Parses the output stem lines to produce a list with possible stems
     for each word in the input.
@@ -40,7 +40,8 @@ def parse_for_simple_stems(input, skip_empty=False):
             stems.append((word, []))
 
         ## append new stem only if not on list already
-        if stem not in stems[-1][1]:
+        stem = None if skip_same_stems and stem in stems[-1][1] else stem
+        if stem is not None:
             stems[-1][1].append(stem)
 
         last_word = word
