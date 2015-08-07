@@ -1,9 +1,19 @@
 # coding=utf-8
-
+# from __future__ import unicode_literals
 import os
 import subprocess
+import sys
+from collections import OrderedDict
 
 from .output_parser import parse_for_simple_stems
+
+
+if sys.version_info[0] < 3:
+    bytes = lambda txt, _: str(txt)
+    decode = unicode
+else:
+    unicode = lambda txt, _: str(txt)
+    decode = lambda txt, _: txt.decode()
 
 
 class Morfologik(object):
@@ -22,13 +32,13 @@ class Morfologik(object):
         Example:
         Morfologik().get_simple_stem(['ja tańczę a ona śpi'])
         returns
-        {
-             'ja': ['ja'],
-             'tańczę': ['tańczyć'],
-             'a': ['a'],
-             'ona': ['on'],
-             'śpi': ['spać']
-        }
+        [
+             ('ja': ['ja']),
+             ('tańczę': ['tańczyć']),
+             ('a': ['a']),
+             ('ona': ['on']),
+             ('śpi': ['spać'])
+        ]
 
         Notes: captions and interpunction may not always work.
         """
@@ -46,15 +56,16 @@ class Morfologik(object):
             ['java', '-jar', self.jar_path, 'plstem',
              '-ie', 'UTF-8',
              '-oe', 'UTF-8'],
+            bufsize=-1,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
-        out, _ = p.communicate(input=bytes("\n".join(words), "UTF-8"))
-        return out.decode()
+        out, _ = p.communicate(input=bytes("\n".join(words), "utf-8"))
+        return decode(out, 'utf-8')
     _run_morfologik.__annotations__ = {'words': list, 'return': str}
 
     def _make_unique(self, words):
-        keys = {}
+        keys = OrderedDict()
         for e in words:
             keys[e] = 1
         return keys.keys()
