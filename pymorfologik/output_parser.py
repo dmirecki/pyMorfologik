@@ -16,16 +16,16 @@ _get_lines_with_stems.__annotations__ = {'morfologik_output': str,
                                          'return': list}
 
 
-def parse_for_simple_stems(input, skip_empty=False, skip_same_stems=True):
+def parse_for_simple_stems(output, skip_empty=False, skip_same_stems=True):
     """
     Parses the output stem lines to produce a list with possible stems
-    for each word in the input.
+    for each word in the output.
 
     :param skip_empty: set True to skip lines without stems (default is False)
     :returns: a list of tuples, each containing an original text word and
               a list of stems for the given word
     """
-    lines_with_stems = _get_lines_with_stems(input)
+    lines_with_stems = _get_lines_with_stems(output)
     stems = list()
 
     last_word = None
@@ -47,4 +47,4 @@ def parse_for_simple_stems(input, skip_empty=False, skip_same_stems=True):
         last_word = word
 
     return stems
-parse_for_simple_stems.__annotations__ = {'output': str, 'return': dict}
+parse_for_simple_stems.__annotations__ = {'output': str, 'return': list}

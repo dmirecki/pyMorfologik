@@ -6,6 +6,7 @@ import sys
 from collections import OrderedDict
 
 from .output_parser import parse_for_simple_stems
+from .parsing import BaseParser
 
 
 if sys.version_info[0] < 3:
@@ -25,36 +26,28 @@ class Morfologik(object):
             self.jar_path = os.path.join(this_dir, "jar/morfologik1.9.jar")
     __init__.__annotations__ = {'jar_path': str}
 
-    def get_simple_stem(self, words, skip_empty=False, skip_same_stems=True):
+    def stem(self, words, parser, **kwargs):
         """
-        Find stems for a given text.
-
-        :param skip_empty: set True if you want to get rid of words with no
-                           stems. Otherwise set to False (default)
-        ?param skip_same_stems: set True (default) if you want to get rid of
-                                the same stems. Otherwise set to False.
+        Get stems for the words using a given parser
 
         Example:
-        Morfologik().get_simple_stem(['ja tańczę a ona śpi'])
-        returns
-        [
-             ('ja': ['ja']),
-             ('tańczę': ['tańczyć']),
-             ('a': ['a']),
-             ('ona': ['on']),
-             ('śpi': ['spać'])
-        ]
+            from .parsing import ListParser
 
-        Notes: captions and interpunction may not always work.
+            parser = ListParser()
+            stemmer = Morfologik()
+            stemmer.stem(['ja tańczę a ona śpi], parser)
+
+            [
+                 ('ja': ['ja']),
+                 ('tańczę': ['tańczyć']),
+                 ('a': ['a']),
+                 ('ona': ['on']),
+                 ('śpi': ['spać'])
+            ]
         """
-        words = self._make_unique(words)
         output = self._run_morfologik(words)
-        return parse_for_simple_stems(
-            output,
-            skip_empty=skip_empty,
-            skip_same_stems=skip_same_stems)
-    get_simple_stem.__annotations__ = {'words': list, 'skip_empty': bool,
-                                       'return': dict}
+        return parser.parse(output, **kwargs)
+    stem.__annotations__ = {'words': list, 'parser': BaseParser}
 
     def _run_morfologik(self, words):
         """
