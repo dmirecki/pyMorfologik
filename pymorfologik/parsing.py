@@ -67,19 +67,22 @@ class ListParser(BaseParser):
         last_word = None
 
         for line in lines_with_stems:
-            word, stem, _ = line.split("\t")
+            word, stem, part = line.split("\t")
             stem = stem if stem != '-' else None
 
             if skip_empty and (stem is None):
                 continue
 
             if last_word != word:
-                stems.append((word, []))
+                stems.append((word, {}))
 
-            ## append new stem only if not on list already
-            stem = None if skip_same and stem in stems[-1][1] else stem
+            stem = None if skip_same and stem in stems[-1][1].keys() else stem
             if stem is not None:
-                stems[-1][1].append(stem)
+                if stem not in stems[-1][1].keys():
+                    stems[-1][1][stem] = [part]
+                else:
+                    if part not in stems[-1][1][stem]:
+                        stems[-1][1][stem].append(part)
 
             last_word = word
 
