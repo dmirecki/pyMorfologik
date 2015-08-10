@@ -39,4 +39,5 @@ This repo is based on Morfologik, a great contribution of Marcin Miłowski (http
 
 
 ### Contributions
+Damian Mirecki
 Adrian Bohdanowicz
