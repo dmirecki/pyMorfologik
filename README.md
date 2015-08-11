@@ -4,19 +4,41 @@ Morfologik is Polish morphological analyzer. For more information see http://git
 
 ## Requirements
 
-This binding works only with Python 3.
+This binding works with Python 2 and Python 3.
 
 ## Installation
 
-Install it from pip:
+Install it from pip
+ > pip install pyMorfologik
 
-`> pip install pyMorfologik`
+or directly from github
+ > git clone https://github.com/dmirecki/pyMorfologik.git
 
 ## Usage
 
 Now, only simple stems are supported:
 
     >>> from pymorfologik import Morfologik
-    >>> Morfologik().get_simple_stem(['taÒczy≥em', 'gra'])
-    {'gra': ['gra', 'graÊ'], 'taÒczy≥em': ['taÒczyÊ']}
+    >>> from pymorfologik.parsing import ListParser
+    >>>
+    >>> parser = ListParser()
+    >>> stemmer = Morfologik()
+    >>> stemmer.stem(['Ala ma kota'], parser)
+    [(u'Ala',
+      {u'Al': [u'subst:sg:acc:m1+subst:sg:gen:m1'],
+       u'Ala': [u'subst:sg:nom:f'],
+       u'Alo': [u'subst:sg:acc:m1+subst:sg:gen:m1']}),
+     (u'ma',
+      {u'mie\u0107': [u'verb:fin:sg:ter:imperf:refl.nonrefl'],
+       u'm\xf3j': [u'adj:sg:nom.voc:f:pos']}),
+     (u'kota', {u'kot': [u'subst:sg:acc:m1'], u'kota': [u'subst:sg:nom:f']})]
 
+### Acknowledgements
+
+This repo is based on Morfologik, a great contribution of Marcin Mi≈Çowski (http://marcinmilkowski.pl) and Dawid Weiss (http://www.dawidweiss.com).
+
+
+### Contributions
+Damian Mirecki
+
+Adrian Bohdanowicz
