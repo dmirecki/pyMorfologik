@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='pyMorfologik',
     packages=['pyMorfologik'],
-    version='0.2.1',
+    version='0.2.2',
     install_requires=[],
     author='Damian Mirecki',
     author_email='dmirecki.dm@gmail.com',
