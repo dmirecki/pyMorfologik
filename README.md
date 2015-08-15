@@ -29,8 +29,8 @@ Now, only simple stems are supported:
        u'Ala': [u'subst:sg:nom:f'],
        u'Alo': [u'subst:sg:acc:m1+subst:sg:gen:m1']}),
      (u'ma',
-      {u'mie\u0107': [u'verb:fin:sg:ter:imperf:refl.nonrefl'],
-       u'm\xf3j': [u'adj:sg:nom.voc:f:pos']}),
+      {u'mieć': [u'verb:fin:sg:ter:imperf:refl.nonrefl'],
+       u'mój': [u'adj:sg:nom.voc:f:pos']}),
      (u'kota', {u'kot': [u'subst:sg:acc:m1'], u'kota': [u'subst:sg:nom:f']})]
 
 ### Acknowledgements
